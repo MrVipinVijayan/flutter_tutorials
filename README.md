@@ -6,6 +6,7 @@ Flutter Best Practices Tutorials can be found in the below links
 <br />
 https://itnext.io/flutter-best-practices-part-1-e89467ea4823
 <br />
+<br />
 
 [![alt text][1]][2]
 
@@ -16,19 +17,21 @@ https://itnext.io/flutter-best-practices-part-1-e89467ea4823
 <br />
 https://itnext.io/flutter-best-practices-part-2-e9e5c79ccb16
 <br />
+<br />
 
-[![alt text][1]][2]
+[![alt text][3]][4]
 
-[1]: [[https://github.com/MrVipinVijayan/flutter_tutorials/blob/flutter_best_practices/flutter_tutorials/thumbnails/bp2.png?raw=true]
-[2]: https://itnext.io/flutter-best-practices-part-2-e9e5c79ccb16
+[3]: https://github.com/MrVipinVijayan/flutter_tutorials/blob/flutter_best_practices/flutter_tutorials/thumbnails/bp2.png?raw=true
+[4]: https://itnext.io/flutter-best-practices-part-2-e9e5c79ccb16
 
-<h3>Flutter Best Practices - Part 2</h3>
+<h3>Flutter Best Practices - Part 3</h3>
 <br />
 https://itnext.io/flutter-best-practices-part-2-e9e5c79ccb16
 <br />
+<br />
 
-[![alt text][1]][2]
+[![alt text][5]][6]
 
-[1]: https://github.com/MrVipinVijayan/flutter_tutorials/blob/flutter_best_practices/flutter_tutorials/thumbnails/bp2.png?raw=true
-[2]: https://itnext.io/flutter-best-practices-part-2-e9e5c79ccb16
+[5]: https://github.com/MrVipinVijayan/flutter_tutorials/blob/flutter_best_practices/flutter_tutorials/thumbnails/bp3.png?raw=true
+[6]: https://itnext.io/flutter-best-practices-part-2-e9e5c79ccb16
 
