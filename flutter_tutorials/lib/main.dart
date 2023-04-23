@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_tutorials/pages/home_page.dart';
-import 'package:flutter_tutorials/theme/theme.dart';
+import 'package:flutter_tutorials/utils/exports.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,26 +7,39 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   return const MaterialApp(
+  //     title: 'Flutter Theme Extensions',
+  //     home: FormPageProvider(),
+  //   );
+  // }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     title: 'Flutter Form Validation',
+  //     navigatorKey: navigatorKey,
+  //     home: MultiProvider(
+  //       providers: [
+  //         ChangeNotifierProvider(
+  //           create: (_) => FormNotifier(),
+  //         )
+  //       ],
+  //       child: const FormPageProvider(),
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Theme Extensions',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      // theme: ThemeData.light().copyWith(
-      //   extensions: <ThemeExtension<dynamic>>[
-      //     MyColors.light,
-      //   ],
-      // ),
-      // darkTheme: ThemeData.dark().copyWith(
-      //   extensions: <ThemeExtension<dynamic>>[
-      //     MyColors.dark,
-      //   ],
-      // ),
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      home: const HomePage(),
+      title: 'Flutter Form Validation',
+      navigatorKey: navigatorKey,
+      home: BlocProvider(
+        create: (context) => FormBloc()..add(const InitEvent()),
+        child: const BlocFormScreen(),
+      ),
     );
   }
 }
