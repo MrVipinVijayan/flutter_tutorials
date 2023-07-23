@@ -1,34 +1,29 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_tutorials/pages/home_page.dart';
-import 'package:flutter_tutorials/theme/theme.dart';
+import 'package:flutter_tutorials/utils/exports.dart';
 
-void main() {
+Future<void> main() async {
+  await JustAudioBackground.init(
+    androidNotificationChannelId: 'com.app.bg_demo.channel.audio',
+    androidNotificationChannelName: 'Audio playback',
+    androidNotificationOngoing: true,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Theme Extensions',
-      // theme: ThemeData(
-      //   primarySwatch: Colors.blue,
-      // ),
-      // theme: ThemeData.light().copyWith(
-      //   extensions: <ThemeExtension<dynamic>>[
-      //     MyColors.light,
-      //   ],
-      // ),
-      // darkTheme: ThemeData.dark().copyWith(
-      //   extensions: <ThemeExtension<dynamic>>[
-      //     MyColors.dark,
-      //   ],
-      // ),
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      home: const HomePage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AudioState(), lazy: false),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        showPerformanceOverlay: false,
+        theme: ThemeData.light(),
+        home: const HomeScreen(),
+      ),
     );
   }
 }
