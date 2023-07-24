@@ -14,10 +14,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AudioState(), lazy: false),
-      ],
+    return ChangeNotifierProvider(
+      lazy: false,
+      create: (_) => AudioState(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         showPerformanceOverlay: false,
