@@ -1,5 +1,4 @@
 import 'package:flutter_tutorials/utils/exports.dart';
-import 'package:logger/logger.dart';
 
 var logger = Logger();
 
@@ -72,8 +71,6 @@ class AudioState extends ChangeNotifier {
   }
 
   Future<void> _init() async {
-    final session = await AudioSession.instance;
-    await session.configure(const AudioSessionConfiguration.speech());
     // Listen to errors during playback.
     player.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace stackTrace) {

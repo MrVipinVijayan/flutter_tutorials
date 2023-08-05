@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.2
   just_audio_background: ^0.0.1-beta.10
   just_audio: ^0.9.34
