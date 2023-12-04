@@ -1,4 +1,5 @@
 import 'package:flutter_tutorials/utils/exports.dart';
+import 'package:flutter_tutorials/widgets/music_list_row.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,25 +24,7 @@ class HomeScreen extends StatelessWidget {
                   if (state?.sequence.isEmpty ?? true) {
                     return const SizedBox.shrink();
                   }
-                  final metadata = state!.currentSource!.tag as MediaItem;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(
-                            child: Image.network(metadata.artUri.toString()),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        metadata.album!,
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      Text(metadata.title),
-                    ],
-                  );
+                  return MusicListRow(state!.currentSource!.tag as MediaItem);
                 },
               ),
             ),
