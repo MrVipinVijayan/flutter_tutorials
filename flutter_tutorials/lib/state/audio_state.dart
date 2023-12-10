@@ -66,11 +66,11 @@ class AudioState extends ChangeNotifier {
   );
 
   AudioState() {
-    player = AudioPlayer();
     _init();
   }
 
   Future<void> _init() async {
+    player = AudioPlayer();
     // Listen to errors during playback.
     player.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace stackTrace) {
