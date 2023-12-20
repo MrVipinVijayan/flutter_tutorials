@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-// Cubit
-class CounterCubit extends Cubit<int> {
-  CounterCubit() : super(0);
+// Events
+enum CounterEvent { increment, decrement }
 
-  void increment() => emit(state + 1);
-  void decrement() => emit(state - 1);
+// States
+class CounterState {
+  final int count;
+
+  CounterState(this.count);
+}
+
+// Bloc
+class CounterBloc extends Bloc<CounterEvent, CounterState> {
+  CounterBloc() : super(CounterState(0)) {
+    on<CounterEvent>((event, emit) {
+      if (event == CounterEvent.increment) {
+        emit(CounterState(state.count + 1));
+      }
+      if (event == CounterEvent.decrement) {
+        emit(CounterState(state.count - 1));
+      }
+    });
+  }
 }
 
 void main() {
@@ -20,7 +36,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
-        create: (context) => CounterCubit(),
+        create: (context) => CounterBloc(),
         child: const MyHomePage(),
       ),
     );
@@ -32,21 +48,21 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final counterCubit = BlocProvider.of<CounterCubit>(context);
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cubit Counter App'),
+        title: const Text('Bloc Counter App'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('Counter Value:'),
-            BlocBuilder<CounterCubit, int>(
+            BlocBuilder<CounterBloc, CounterState>(
               builder: (context, state) {
                 return Text(
-                  state.toString(),
+                  state.count.toString(),
                   style: const TextStyle(fontSize: 24),
                 );
               },
@@ -59,14 +75,14 @@ class MyHomePage extends StatelessWidget {
         children: [
           FloatingActionButton(
             onPressed: () {
-              counterCubit.increment();
+              counterBloc.add(CounterEvent.increment);
             },
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 16),
           FloatingActionButton(
             onPressed: () {
-              counterCubit.decrement();
+              counterBloc.add(CounterEvent.decrement);
             },
             child: const Icon(Icons.remove),
           ),
