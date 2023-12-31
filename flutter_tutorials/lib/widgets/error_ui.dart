@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class UserErrorUI extends StatelessWidget {
-  const UserErrorUI({super.key, this.message = ''});
+class ToDoErrorUI extends StatelessWidget {
+  const ToDoErrorUI({super.key, this.message = ''});
 
   final String message;
 
