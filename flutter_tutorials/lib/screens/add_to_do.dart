@@ -1,11 +1,16 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorials/bloc/todo_bloc.dart';
 import 'package:flutter_tutorials/bloc/todo_event.dart';
 import 'package:flutter_tutorials/bloc/todo_state.dart';
 import 'package:flutter_tutorials/model/todo.dart';
+import 'package:flutter_tutorials/utils/bloc_utils.dart';
 import 'package:flutter_tutorials/utils/nav_utils.dart';
 import 'package:flutter_tutorials/utils/utils.dart';
+import 'package:flutter_tutorials/widgets/btn_complete.dart';
+import 'package:flutter_tutorials/widgets/btn_save.dart';
 
 class AddToDoScreen extends StatelessWidget {
   const AddToDoScreen({super.key, this.toDo});
@@ -14,25 +19,21 @@ class AddToDoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final toDoBloc = BlocProvider.of<ToDoBloc>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(null == toDo ? 'New ToDo' : 'Edit ToDo'),
         actions: [
-          _saveActionBtn(toDoBloc),
+          BtnSave(toDo: toDo),
         ],
       ),
-      body: BlocListener<ToDoBloc, ToDoState>(
-        listener: (context, state) => blocListenerAction,
-        child: _addEditUI(toDoBloc),
-      ),
-      floatingActionButton: _completeBtn(toDoBloc),
+      body: _addEditUI(),
+      floatingActionButton: BtnComplete(toDo: toDo),
     );
   }
 
-  Widget _addEditUI(ToDoBloc toDoBloc) {
+  Widget _addEditUI() {
     return BlocListener<ToDoBloc, ToDoState>(
-      listener: (context, state) => blocListenerAction(context, state),
+      listener: blocListenerAction,
       child: BlocBuilder<ToDoBloc, ToDoState>(
         builder: (context, state) {
           if (state is ToDoAddInProgressState) {
@@ -44,64 +45,13 @@ class AddToDoScreen extends StatelessWidget {
           if (state is ToDoDeleteInProgressState) {
             return const Center(child: Text('Deleting ToDo...'));
           }
-          return _formUI(context, toDoBloc);
+          return _formUI(context);
         },
       ),
     );
   }
 
-  Widget _saveActionBtn(ToDoBloc toDoBloc) {
-    return BlocBuilder<ToDoBloc, ToDoState>(
-      builder: (context, state) {
-        return IconButton(
-          onPressed: () async {
-            if (null != toDo) {
-              if (toDo?.note == null || toDo!.note!.isEmpty) {
-                showToast('Please enter a note');
-                return;
-              }
-              toDoBloc.add(UpdateToDoEvent(toDo!));
-              return;
-            }
-            if (state is ToDoCurrentState) {
-              if (state.toDo.note == null || state.toDo.note!.isEmpty) {
-                showToast('Please enter a note');
-                return;
-              }
-              toDoBloc.add(AddToDoEvent(state.toDo));
-            }
-          },
-          icon: Icon(null == toDo ? Icons.add : Icons.update),
-        );
-      },
-    );
-  }
-
-  Widget _completeBtn(ToDoBloc toDoBloc) {
-    if (toDo?.completed ?? true) {
-      return const SizedBox.shrink();
-    }
-    return BlocBuilder<ToDoBloc, ToDoState>(
-      builder: (context, state) {
-        return FloatingActionButton(
-          backgroundColor: Colors.green,
-          onPressed: () async {
-            if (null != toDo) {
-              toDo?.completed = true;
-              toDoBloc.add(UpdateToDoEvent(toDo!));
-              return;
-            }
-          },
-          child: const Icon(
-            Icons.check,
-            color: Colors.white,
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _formUI(BuildContext context, ToDoBloc toDoBloc) {
+  Widget _formUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Column(
@@ -109,16 +59,14 @@ class AddToDoScreen extends StatelessWidget {
           TextFormField(
             initialValue: toDo?.note,
             onChanged: (value) {
-              print(value);
-
               if (null == toDo) {
                 final newToDo = ToDo();
                 newToDo.note = value;
-                toDoBloc.add(SetToDoNoteEvent(newToDo));
+                context.read<ToDoBloc>().add(SetToDoNoteEvent(newToDo));
                 return;
               }
               toDo?.note = value;
-              toDoBloc.add(SetToDoNoteEvent(toDo!));
+              context.read<ToDoBloc>().add(SetToDoNoteEvent(toDo!));
             },
           ),
         ],
@@ -126,31 +74,33 @@ class AddToDoScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _refreshToDo(BuildContext context) async {
-    context.read<ToDoBloc>().add(const LoadToDoEvent());
-  }
-
   Future<void> blocListenerAction(BuildContext context, ToDoState state) async {
     if (state is ToDoAddState) {
       if (state.success) {
+        unawaited(showToast('To-Do saved successfully.'));
         closeScreen();
-        _refreshToDo(context);
+        refreshToDo(context);
         return;
       }
+      unawaited(showToast('Error saving To-Do.'));
     }
     if (state is ToDoDeleteState) {
       if (state.success) {
+        unawaited(showToast('To-Do deleted successfully.'));
         closeScreen();
-        _refreshToDo(context);
+        refreshToDo(context);
         return;
       }
+      unawaited(showToast('Error deleting To-Do.'));
     }
     if (state is ToDoUpdateState) {
       if (state.success) {
+        unawaited(showToast('To-Do updated successfully.'));
         closeScreen();
-        _refreshToDo(context);
+        refreshToDo(context);
         return;
       }
+      unawaited(showToast('Error updating To-Do.'));
     }
   }
 }

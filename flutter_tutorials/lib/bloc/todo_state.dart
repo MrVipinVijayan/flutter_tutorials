@@ -12,6 +12,12 @@ class ToDoInitState extends ToDoState {
   List<Object?> get props => [];
 }
 
+class Initialized extends ToDoState {
+  const Initialized();
+  @override
+  List<Object?> get props => [];
+}
+
 class ToDoCurrentState extends ToDoState {
   const ToDoCurrentState(this.toDo);
   final ToDo toDo;
@@ -39,17 +45,11 @@ class ToDoErrorState extends ToDoState {
   List<Object?> get props => [error];
 }
 
-class Initialized extends ToDoState {
-  const Initialized();
-  @override
-  List<Object?> get props => [];
-}
-
 class ToDoAddState extends ToDoState {
   final bool success;
   const ToDoAddState(this.success);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [success];
 }
 
 class ToDoAddInProgressState extends ToDoState {
@@ -75,7 +75,7 @@ class ToDoDeleteState extends ToDoState {
   final bool success;
   const ToDoDeleteState(this.success);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [success];
 }
 
 class ToDoDeleteInProgressState extends ToDoState {

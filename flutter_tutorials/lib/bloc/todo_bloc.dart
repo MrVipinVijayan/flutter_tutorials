@@ -29,7 +29,6 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
     emit(const ToDoAddInProgressState());
     try {
       await _toDoRepo.saveToDo(event.toDo);
-      // Move the delay outside the try block
       // await Future.delayed(const Duration(seconds: 3));
       emit(const ToDoAddState(true));
     } catch (e) {
