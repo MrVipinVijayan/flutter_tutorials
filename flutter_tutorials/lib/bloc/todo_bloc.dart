@@ -47,7 +47,8 @@ class ToDoBloc extends Bloc<ToDoEvent, ToDoState> {
   }
 
   Future<void> deleteToDo(DeleteToDoEvent event, emit) async {
-    _toDoRepo.deleteToDo(event.toDo);
+    emit(const ToDoDeleteInProgressState());
+    await _toDoRepo.deleteToDo(event.toDo);
     emit(const ToDoDeleteState(true));
   }
 

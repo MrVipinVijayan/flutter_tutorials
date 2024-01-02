@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorials/bloc/todo_bloc.dart';
-import 'package:flutter_tutorials/bloc/todo_event.dart';
 import 'package:flutter_tutorials/bloc/todo_state.dart';
 import 'package:flutter_tutorials/model/todo.dart';
+import 'package:flutter_tutorials/utils/bloc_utils.dart';
 
 class BtnComplete extends StatelessWidget {
   const BtnComplete({super.key, this.toDo});
@@ -21,7 +21,7 @@ class BtnComplete extends StatelessWidget {
         onPressed: () async {
           if (null != toDo) {
             toDo?.completed = true;
-            context.read<ToDoBloc>().add(UpdateToDoEvent(toDo!));
+            updateToDo(context, toDo!);
             return;
           }
         },

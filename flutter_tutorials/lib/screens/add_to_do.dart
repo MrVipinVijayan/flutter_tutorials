@@ -10,7 +10,8 @@ import 'package:flutter_tutorials/utils/bloc_utils.dart';
 import 'package:flutter_tutorials/utils/nav_utils.dart';
 import 'package:flutter_tutorials/utils/utils.dart';
 import 'package:flutter_tutorials/widgets/btn_complete.dart';
-import 'package:flutter_tutorials/widgets/btn_save.dart';
+import 'package:flutter_tutorials/widgets/btn_delete_to_do.dart';
+import 'package:flutter_tutorials/widgets/btn_save_update_to_do.dart';
 
 class AddToDoScreen extends StatelessWidget {
   const AddToDoScreen({super.key, this.toDo});
@@ -21,9 +22,11 @@ class AddToDoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 3,
         title: Text(null == toDo ? 'New ToDo' : 'Edit ToDo'),
         actions: [
           BtnSave(toDo: toDo),
+          if (null != toDo) BtnDeleteToDo(toDo: toDo!),
         ],
       ),
       body: _addEditUI(),
@@ -57,6 +60,9 @@ class AddToDoScreen extends StatelessWidget {
       child: Column(
         children: [
           TextFormField(
+            decoration: const InputDecoration(
+              hintText: 'Add a note',
+            ),
             initialValue: toDo?.note,
             onChanged: (value) {
               if (null == toDo) {

@@ -20,7 +20,10 @@ class ToDoListRow extends StatelessWidget {
         toDo.note ?? '',
         style: Theme.of(context).textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
-              color: toDo.completed ? Colors.green : Colors.black,
+              color: toDo.completed ? Colors.grey : Colors.black,
+              decoration: toDo.completed
+                  ? TextDecoration.lineThrough
+                  : TextDecoration.none,
             ),
       ),
     );

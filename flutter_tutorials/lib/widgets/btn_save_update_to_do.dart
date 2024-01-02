@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorials/bloc/todo_bloc.dart';
-import 'package:flutter_tutorials/bloc/todo_event.dart';
 import 'package:flutter_tutorials/bloc/todo_state.dart';
 import 'package:flutter_tutorials/model/todo.dart';
+import 'package:flutter_tutorials/utils/bloc_utils.dart';
 import 'package:flutter_tutorials/utils/utils.dart';
 
 class BtnSave extends StatelessWidget {
@@ -19,7 +19,7 @@ class BtnSave extends StatelessWidget {
       builder: (context, state) {
         return IconButton(
           onPressed: () => _addOrUpdateToDo(context, state),
-          icon: Icon(null == toDo ? Icons.add : Icons.update),
+          icon: Icon(null == toDo ? Icons.check : Icons.update),
         );
       },
     );
@@ -31,7 +31,7 @@ class BtnSave extends StatelessWidget {
         unawaited(showToast('Please enter a note'));
         return;
       }
-      context.read<ToDoBloc>().add(UpdateToDoEvent(toDo!));
+      updateToDo(context, toDo!);
       return;
     }
     if (state is ToDoCurrentState) {
@@ -39,7 +39,7 @@ class BtnSave extends StatelessWidget {
         unawaited(showToast('Please enter a note'));
         return;
       }
-      context.read<ToDoBloc>().add(AddToDoEvent(state.toDo));
+      addToDo(context, state.toDo);
       return;
     }
   }
