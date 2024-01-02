@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tutorials/bloc/todo_bloc.dart';
-import 'package:flutter_tutorials/bloc/todo_event.dart';
 import 'package:flutter_tutorials/bloc/todo_state.dart';
 import 'package:flutter_tutorials/model/todo.dart';
 import 'package:flutter_tutorials/utils/bloc_utils.dart';
@@ -68,11 +67,11 @@ class AddToDoScreen extends StatelessWidget {
               if (null == toDo) {
                 final newToDo = ToDo();
                 newToDo.note = value;
-                context.read<ToDoBloc>().add(SetToDoNoteEvent(newToDo));
+                setToDo(context, newToDo);
                 return;
               }
               toDo?.note = value;
-              context.read<ToDoBloc>().add(SetToDoNoteEvent(toDo!));
+              setToDo(context, toDo!);
             },
           ),
         ],
@@ -89,6 +88,7 @@ class AddToDoScreen extends StatelessWidget {
         return;
       }
       unawaited(showToast('Error saving To-Do.'));
+      return;
     }
     if (state is ToDoDeleteState) {
       if (state.success) {
@@ -98,6 +98,7 @@ class AddToDoScreen extends StatelessWidget {
         return;
       }
       unawaited(showToast('Error deleting To-Do.'));
+      return;
     }
     if (state is ToDoUpdateState) {
       if (state.success) {
