@@ -45,17 +45,17 @@ class ToDoErrorState extends ToDoState {
   List<Object?> get props => [error];
 }
 
+class ToDoAddInProgressState extends ToDoState {
+  const ToDoAddInProgressState();
+  @override
+  List<Object?> get props => [];
+}
+
 class ToDoAddState extends ToDoState {
   final bool success;
   const ToDoAddState(this.success);
   @override
   List<Object?> get props => [success];
-}
-
-class ToDoAddInProgressState extends ToDoState {
-  const ToDoAddInProgressState();
-  @override
-  List<Object?> get props => [];
 }
 
 class ToDoUpdateInProgressState extends ToDoState {
@@ -71,15 +71,15 @@ class ToDoUpdateState extends ToDoState {
   List<Object?> get props => [];
 }
 
+class ToDoDeleteInProgressState extends ToDoState {
+  const ToDoDeleteInProgressState();
+  @override
+  List<Object?> get props => [];
+}
+
 class ToDoDeleteState extends ToDoState {
   final bool success;
   const ToDoDeleteState(this.success);
   @override
   List<Object?> get props => [success];
-}
-
-class ToDoDeleteInProgressState extends ToDoState {
-  const ToDoDeleteInProgressState();
-  @override
-  List<Object?> get props => [];
 }

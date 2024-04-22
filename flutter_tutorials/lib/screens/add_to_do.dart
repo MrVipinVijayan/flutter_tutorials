@@ -8,7 +8,6 @@ import 'package:flutter_tutorials/model/todo.dart';
 import 'package:flutter_tutorials/utils/bloc_utils.dart';
 import 'package:flutter_tutorials/utils/nav_utils.dart';
 import 'package:flutter_tutorials/utils/utils.dart';
-import 'package:flutter_tutorials/widgets/btn_complete.dart';
 import 'package:flutter_tutorials/widgets/btn_delete_to_do.dart';
 import 'package:flutter_tutorials/widgets/btn_save_update_to_do.dart';
 
@@ -29,7 +28,7 @@ class AddToDoScreen extends StatelessWidget {
         ],
       ),
       body: _addEditUI(),
-      floatingActionButton: BtnComplete(toDo: toDo),
+      // floatingActionButton: BtnComplete(toDo: toDo),
     );
   }
 
