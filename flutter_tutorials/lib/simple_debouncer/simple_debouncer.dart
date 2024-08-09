@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorials/debouncer/debouncer.dart';
+import 'package:flutter_tutorials/simple_debouncer/debouncer.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class SimpleDebouncer extends StatefulWidget {
+  const SimpleDebouncer({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SimpleDebouncer> createState() => _SimpleDebouncerState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SimpleDebouncerState extends State<SimpleDebouncer> {
   //
-  final debouncer = Debouncer(milliseconds: 200);
+  final debouncer = Debouncer(milliseconds: 300);
 
   void onSearchChanged(String query) {
     debouncer.run(() {
-      print('Fetching Data $query');
+      print('Searching $query');
     });
   }
 
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Timer - Debouncer Search'),
+        title: Text('Simple Debouncer'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),

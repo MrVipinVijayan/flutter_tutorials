@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 
 class SearchQueryNotifier extends ValueNotifier<String> {
   SearchQueryNotifier() : super('');
 
-  Timer? _debounceTimer;
+  Timer? _timer;
 
   void setQuery(String query) {
-    if (null != _debounceTimer) {
-      _debounceTimer?.cancel();
+    if (null != _timer) {
+      _timer?.cancel();
     }
-    _debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+    _timer = Timer(Duration(milliseconds: 300), () {
       value = query;
     });
   }

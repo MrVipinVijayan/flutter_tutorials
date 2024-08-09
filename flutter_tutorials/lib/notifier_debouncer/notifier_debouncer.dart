@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tutorials/notifier/search_query_notifier.dart';
+import 'package:flutter_tutorials/notifier_debouncer/search_query_notifier.dart';
 
-class NotifierHomePage extends StatefulWidget {
-  const NotifierHomePage({super.key});
+class NotifierDebouncer extends StatefulWidget {
+  const NotifierDebouncer({super.key});
 
   @override
-  State<NotifierHomePage> createState() => _NotifierHomePageState();
+  State<NotifierDebouncer> createState() => _NotifierDebouncerState();
 }
 
-class _NotifierHomePageState extends State<NotifierHomePage> {
+class _NotifierDebouncerState extends State<NotifierDebouncer> {
   //
   final debouncer = SearchQueryNotifier();
 
   @override
   void initState() {
     super.initState();
-    debouncer.addListener(
-      () {
-        print('changed ${debouncer.value}');
-      },
-    );
+    debouncer.addListener(() {
+      print('Searching ${debouncer.value}');
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Value Notifier Search'),
+        title: Text('Value Notifier Debouncer'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(30),
@@ -38,6 +36,7 @@ class _NotifierHomePageState extends State<NotifierHomePage> {
                 'Searching ${debouncer.value}',
               ),
             ),
+            const SizedBox(height: 30),
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
