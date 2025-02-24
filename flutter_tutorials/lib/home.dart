@@ -21,20 +21,16 @@ class _HomeState extends State<Home> {
   double itemSize = 330;
   double shrinkSize = 200;
   double prevPosition = 0;
-
-  void listener() {
-    print('Changed');
-  }
+  double totalSize = 0;
 
   @override
   void initState() {
     super.initState();
-    carouselController.addListener(listener);
+    totalSize = itemSize * images.length;
   }
 
   @override
   void dispose() {
-    carouselController.removeListener(listener);
     super.dispose();
   }
 
@@ -112,7 +108,10 @@ class _HomeState extends State<Home> {
               const SizedBox(width: 20),
               ElevatedButton(
                 onPressed: () {
-                  moveTo(prevPosition + itemSize);
+                  double nextPos = prevPosition + itemSize;
+                  if (nextPos < totalSize) {
+                    moveTo(nextPos);
+                  }
                 },
                 child: const Text('Next'),
               ),
