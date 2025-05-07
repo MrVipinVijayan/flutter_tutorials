@@ -31,7 +31,7 @@ def delete_node_by_tag(react_component_str, tags_to_not_delete=None):
 
     # Process each found tag
     for tag in found_tags:
-        if tag not in tags_to_not_delete:
+        if tag not in tags_to_not_delete and tag.startswith("Original"):
             print(f"Deleting tag: {tag}")
             # Match exact case for both self-closing and regular tags
             pattern = rf"<{re.escape(tag)}(\s+[^>]*)?/>|<{re.escape(tag)}(\s+[^>]*)?>(.*?)</{re.escape(tag)}>"
