@@ -1,28 +1,44 @@
 from bs4 import BeautifulSoup
 import sys
+from lxml import etree
+from io import StringIO
+import re
 
 print("\nApp starting...\n")
 
 icons = [
-    "home",
-    "settings",
-    "profile",
-    "logout",
-    "dashboard",
-    "notifications",
-    "messages",
-    "help",
-    "search",
-    "favorites",
+    "OriginalHome",
+    "OriginalSettings",
+    "OriginalProfile",
+    "OriginalLogout",
+    "OriginalDashboard",
+    "OriginalNotifications",
+    "OriginalMessages",
+    "OriginalHelp",
+    "OriginalSearch",
+    "OriginalFavorites",
 ]
 
 
-def delete_node_by_tag(react_component_str, tags_to_delete):
-    soup = BeautifulSoup(f"<root>{react_component_str}</root>", "html.parser")
-    for tag in tags_to_delete:
-        for found_tag in soup.find_all(tag):
-            found_tag.replace_with(f"{{/* {tag} component is not available */}}")
-    return "".join(str(child) for child in soup.root.children)
+def delete_node_by_tag(react_component_str, tags_to_not_delete=None):
+    if tags_to_not_delete is None:
+        tags_to_not_delete = []
+
+    result = react_component_str
+    # Find all component tags in the JSX string
+    tag_pattern = r"<([A-Z][A-Za-z0-9]*)"
+    found_tags = set(re.findall(tag_pattern, result))
+
+    # Process each found tag
+    for tag in found_tags:
+        if tag not in tags_to_not_delete:
+            print(f"Deleting tag: {tag}")
+            # Match exact case for both self-closing and regular tags
+            pattern = rf"<{re.escape(tag)}(\s+[^>]*)?/>|<{re.escape(tag)}(\s+[^>]*)?>(.*?)</{re.escape(tag)}>"
+            replacement = f"{{/* {tag} component is not available */}}"
+            result = re.sub(pattern, replacement, result, flags=re.DOTALL)
+
+    return result
 
 
 jsx_str = """
@@ -45,13 +61,15 @@ jsx_str = """
             </div>
             <h1 style={{ margin: 0, fontSize: '20px' }}>My App</h1>
             </header>
-            <home />
-
+            <Home />
+            <OriginalFavorites />
+            <OriginalFavoriteStar />
+            <OriginalSettings1 />
             {/* Main content */}
             <main style={{ flex: 1, padding: '1rem' }}>
             <p>Welcome to the app!</p>
             </main>
-                <settings />
+                <Settings />
             {/* Footer */}
             <footer style={{
             padding: '1rem',
